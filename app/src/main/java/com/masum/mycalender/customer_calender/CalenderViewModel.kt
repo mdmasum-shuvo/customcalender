@@ -15,10 +15,11 @@ class CalenderViewModel : ViewModel() {
     var list = ArrayList<DayName>()
     var dateList = arrayOfNulls<Int>(28)
 
-    var _selectedMonth=MutableLiveData<String>()
+    private var _selectedMonth=MutableLiveData<String>()
 
     val selectedMonth :LiveData<String>
         get() = _selectedMonth
+
     val currentDayFfWeek=3
     var currentMonth=0
     init {
@@ -27,7 +28,7 @@ class CalenderViewModel : ViewModel() {
         println(getCurrentDateTime())
     }
     private fun showDayName() {
-        list = ArrayList<DayName>()
+        list = ArrayList()
         list.add(DayName("S"))
         list.add(DayName("M"))
         list.add(DayName("T"))
