@@ -38,18 +38,24 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
                 DayNameItem(it.name)
             }
         }
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(7),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        viewModel.dateList.observeAsState().value?.let {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(7),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
 
-        ) {
-            items(count = viewModel.dateList.size + viewModel.currentDayFfWeek) {
-                if (it >= viewModel.currentDayFfWeek) {
-                    var countDate = it - viewModel.currentDayFfWeek
-                    DateItem(isCurrent = (it - (viewModel.currentDayFfWeek - 1)) == 16, ++countDate)
+            ) {
+                items(count = viewModel.dateList.value!! + viewModel.startDayOfMonth.value!!) {
+                    if (it >= viewModel.startDayOfMonth.value!!) {
+                        var countDate = it - viewModel.startDayOfMonth.value!!
+                        DateItem(
+                            isCurrent = (it - (viewModel.startDayOfMonth.value!! - 1)) == 16,
+                            ++countDate
+                        )
+                    }
                 }
             }
         }
+
     }
 }
 
