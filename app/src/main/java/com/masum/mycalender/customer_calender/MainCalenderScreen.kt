@@ -54,11 +54,11 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
 
             ) {
-                items(count = viewModel.dateList.value!! + viewModel.startDayOfMonth.value!!) {
-                    if (it >= viewModel.startDayOfMonth.value!!) {
-                        var countDate = it - viewModel.startDayOfMonth.value!!
+                items(count =it + viewModel.startDayOfMonth.value!!) {count->
+                    if (count >= viewModel.startDayOfMonth.value!!) {
+                        var countDate = count - viewModel.startDayOfMonth.value!!
                         DateItem(
-                            isCurrent = (it - (viewModel.startDayOfMonth.value!! - 1)) == 16,
+                            isCurrent = (count - (viewModel.startDayOfMonth.value!! - 1)) == 16,
                             ++countDate
                         )
                     }
