@@ -3,6 +3,7 @@ package com.masum.mycalender.customer_calender
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -24,9 +25,18 @@ import com.masum.mycalender.ui.theme.background
 
 @Composable
 fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
 
-        viewModel.selectedMonth.observeAsState().value?.let { DateView(it) }
+        viewModel.selectedMonth.observeAsState().value?.let {
+            DateView(it,
+                {viewModel.decreaseMonth(it) },
+                { viewModel.increaseMonth(it) })
+        }
         Spacer(modifier = Modifier.height(20.dp))
 
         LazyVerticalGrid(

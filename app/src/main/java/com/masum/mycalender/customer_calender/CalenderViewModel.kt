@@ -1,6 +1,5 @@
 package com.masum.mycalender.customer_calender
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +16,7 @@ class CalenderViewModel : ViewModel() {
 
 
     var list = ArrayList<DayName>()
-    var _dateList = MutableLiveData<Int>()
+    private var _dateList = MutableLiveData<Int>()
     val dateList: LiveData<Int>
         get() = _dateList
 
@@ -34,30 +33,86 @@ class CalenderViewModel : ViewModel() {
 
     init {
         showDayName()
-        _selectedMonth.value = DateTimeUtils.getCurrentDateTime(DateTimeUtils.MMM_YYYY)
+        _selectedMonth.value = DateTimeUtils.getCurrentDateTime(DateTimeUtils.MMM_YYYY_STRING)
         println(getCurrentDateTime())
-        getStartDayOfMonth(2023,11)
+        getStartDayOfMonth(
+            DateTimeUtils.getCurrentDateTime("yyyy").toInt(),
+            DateTimeUtils.getCurrentDateTime("MM").toInt()
+        )
     }
 
 
-    fun getStartDayOfMonth(year:Int,month:Int) {
+    fun increaseMonth(date: String) {
+        val selectedMonth = DateTimeUtils.changeDateFormat(
+            DateTimeUtils.MMM_YYYY_STRING,
+            "MM",
+            date
+        )!!.toInt()
+
+        val selectedYear = DateTimeUtils.changeDateFormat(
+            DateTimeUtils.MMM_YYYY_STRING,
+            "yyyy",
+            date
+        )!!.toInt()
+
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.YEAR, selectedYear)
+        cal.set(Calendar.MONTH, DateTimeUtils.actualToCalenderMonth(selectedMonth))
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+
+        cal.time = DateTimeUtils.convertStringToDate(DateTimeUtils.MMM_YYYY_STRING, date)
+        cal.add(Calendar.MONTH, 1)
+        val month = cal[Calendar.MONTH]
+        val year = cal[Calendar.YEAR]
+        getStartDayOfMonth(year, DateTimeUtils.actualMonth(month))
+    }
+
+    fun decreaseMonth(date: String) {
+        val selectedMonth = DateTimeUtils.changeDateFormat(
+            DateTimeUtils.MMM_YYYY_STRING,
+            "MM",
+            date
+        )!!.toInt()
+
+        val selectedYear = DateTimeUtils.changeDateFormat(
+            DateTimeUtils.MMM_YYYY_STRING,
+            "yyyy",
+            date
+        )!!.toInt()
+
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.YEAR, selectedYear)
+        cal.set(Calendar.MONTH, DateTimeUtils.actualToCalenderMonth(selectedMonth))
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+
+        cal.time = DateTimeUtils.convertStringToDate(DateTimeUtils.MMM_YYYY_STRING, date)
+        cal.add(Calendar.MONTH, -1)
+        val month = cal[Calendar.MONTH]
+        val year = cal[Calendar.YEAR]
+        getStartDayOfMonth(year, DateTimeUtils.actualMonth(month))
+    }
+
+
+    fun getStartDayOfMonth(year: Int, month: Int) {
         val cal: Calendar = Calendar.getInstance()
         cal.set(Calendar.YEAR, year)
-        cal.set(Calendar.MONTH, month)
+        cal.set(Calendar.MONTH, DateTimeUtils.actualToCalenderMonth(month))
         cal.set(Calendar.DAY_OF_MONTH, 1)
         System.out.println(cal.getTime())
         val month = cal[Calendar.MONTH]
         val year = cal[Calendar.YEAR]
-        val length = YearMonth.of(year, month+1).lengthOfMonth()
-        _startDayOfMonth.value =cal[Calendar.DAY_OF_WEEK]-1
-        _dateList.value =length
+        val length = YearMonth.of(year, DateTimeUtils.actualMonth(month)).lengthOfMonth()
+        setSelectedTopMonthYear(year, month)
+        _startDayOfMonth.value = cal[Calendar.DAY_OF_WEEK] - 1
+        _dateList.value = length
     }
 
-    fun getStartDayOfMonth(dateFormat: String, time: Date) {
-        val formatter = SimpleDateFormat("E")
-        val dayName = formatter.format(time)
-        Log.e("", "")
-        _startDayOfMonth.value = startDaySelectorPosition(dayName)
+    private fun setSelectedTopMonthYear(year: Int, month: Int) {
+        _selectedMonth.value = DateTimeUtils.changeDateFormat(
+            DateTimeUtils.MM_YYYY_NUMBER,
+            DateTimeUtils.MMM_YYYY_STRING,
+            "${DateTimeUtils.actualMonth(month)}/$year"
+        )
     }
 
     private fun showDayName() {
