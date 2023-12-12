@@ -47,5 +47,5 @@ val dotColor = Color(0xFFFD9D9D9)
 
 val orange = Color(0xFFF68B1F)
 val orange_light = Color(0xFFFED9AC)
-val shadowColor = Color(0xFFC7C7C7)
+val circleColor = Color(0xFF6CC51D)
 

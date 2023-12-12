@@ -22,6 +22,8 @@ class CalenderViewModel : ViewModel() {
 
     private var _selectedMonth = MutableLiveData<String>()
 
+    var currentMonth=DateTimeUtils.getCurrentDateTime(DateTimeUtils.MMM_YYYY_STRING)
+    var currentDateNumber=DateTimeUtils.getCurrentDateTime(DateTimeUtils.dd)
     val selectedMonth: LiveData<String>
         get() = _selectedMonth
 
@@ -29,7 +31,7 @@ class CalenderViewModel : ViewModel() {
     val startDayOfMonth: LiveData<Int>
         get() = _startDayOfMonth
 
-    var currentMonth = 0
+    var selectedExploreIndex = MutableLiveData<Int>(-1)
 
     init {
         showDayName()
@@ -43,6 +45,7 @@ class CalenderViewModel : ViewModel() {
 
 
     fun increaseMonth(date: String) {
+        selectedExploreIndex.value=-1
         val selectedMonth = DateTimeUtils.changeDateFormat(
             DateTimeUtils.MMM_YYYY_STRING,
             "MM",
@@ -68,6 +71,7 @@ class CalenderViewModel : ViewModel() {
     }
 
     fun decreaseMonth(date: String) {
+        selectedExploreIndex.value=-1
         val selectedMonth = DateTimeUtils.changeDateFormat(
             DateTimeUtils.MMM_YYYY_STRING,
             "MM",

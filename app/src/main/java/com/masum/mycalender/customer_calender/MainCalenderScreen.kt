@@ -11,7 +11,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +28,12 @@ import com.masum.mycalender.ui.theme.background
 
 @Composable
 fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
+
+    val selectedIndex = remember { mutableStateOf(viewModel.selectedExploreIndex.value!!) }
+
+    LaunchedEffect(key1 = selectedIndex.value, block = {
+        viewModel.selectedExploreIndex.value = selectedIndex.value
+    })
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -34,8 +43,14 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
 
         viewModel.selectedMonth.observeAsState().value?.let {
             DateView(it,
-                {viewModel.decreaseMonth(it) },
-                { viewModel.increaseMonth(it) })
+                {
+                    viewModel.decreaseMonth(it)
+                    selectedIndex.value = -1
+                },
+                {
+                    viewModel.increaseMonth(it)
+                    selectedIndex.value = -1
+                })
         }
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -54,15 +69,21 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
 
             ) {
-                items(count =it + viewModel.startDayOfMonth.value!!) {count->
+                items(count = it + viewModel.startDayOfMonth.value!!, key = {
+                    it
+                }) { count ->
                     if (count >= viewModel.startDayOfMonth.value!!) {
                         var countDate = count - viewModel.startDayOfMonth.value!!
                         DateItem(
-                            isCurrent = (count - (viewModel.startDayOfMonth.value!! - 1)) == 16,
-                            ++countDate
+                            isCurrent = if (viewModel.currentMonth == viewModel.selectedMonth.value) {
+                                (count - (viewModel.startDayOfMonth.value!! - 1)) == viewModel.currentDateNumber.toInt()
+                            } else false,
+                            ++countDate, selectedIndex = selectedIndex, {}
                         )
                     }
                 }
+
+
             }
         }
 

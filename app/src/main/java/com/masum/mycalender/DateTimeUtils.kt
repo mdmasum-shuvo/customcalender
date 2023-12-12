@@ -12,6 +12,7 @@ object DateTimeUtils {
 
     const val MMM_YYYY_STRING = "MMM yyyy"
     const val MM_YYYY_NUMBER = "MM/yyyy"
+    const val dd = "dd"
 
     private var calendar: Calendar? = null
     var currentPosition = 0
