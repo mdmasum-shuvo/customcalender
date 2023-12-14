@@ -59,27 +59,19 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
 
         ) {
-            items(viewModel.list) {
+            items(viewModel.list, key = { item -> item.name }) {
                 DayNameItem(it.name)
             }
         }
-        viewModel.dateList.observeAsState().value?.let {
+        viewModel.calenderMonth.observeAsState().value?.let {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(7),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
 
             ) {
-                items(count = it + viewModel.startDayOfMonth.value!!, key = {
-                    it
-                }) { count ->
-                    if (count >= viewModel.startDayOfMonth.value!!) {
-                        var countDate = count - viewModel.startDayOfMonth.value!!
-                        DateItem(
-                            isCurrent = if (viewModel.currentMonth == viewModel.selectedMonth.value) {
-                                (count - (viewModel.startDayOfMonth.value!! - 1)) == viewModel.currentDateNumber.toInt()
-                            } else false,
-                            ++countDate, selectedIndex = selectedIndex, {}
-                        )
+                items(items = it) { item ->
+                    if (item.date != -1) {
+                        DateItem(monthDate = item)
                     }
                 }
 

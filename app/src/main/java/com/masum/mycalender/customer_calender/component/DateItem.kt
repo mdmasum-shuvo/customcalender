@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.masum.mycalender.customer_calender.data.MonthDate
 import com.masum.mycalender.ui.theme.MycalenderTheme
 import com.masum.mycalender.ui.theme.background
 import com.masum.mycalender.ui.theme.brand_color
@@ -35,8 +36,7 @@ import com.masum.mycalender.ui.theme.light_background
 
 @Composable
 fun DateItem(
-    isCurrent: Boolean = false,
-    dateNumber: Int = 0,
+    monthDate: MonthDate?,
     selectedIndex: MutableState<Int>? = null,
     onClick: (Int) -> Unit = { }
 ) {
@@ -45,15 +45,15 @@ fun DateItem(
             Modifier
                 .fillMaxWidth()
                 .selectable(
-                    selected = selectedIndex?.value == dateNumber, onClick = {
+                    selected = selectedIndex?.value == monthDate?.date, onClick = {
                         selectedIndex?.value =
-                            if (selectedIndex?.value != dateNumber) dateNumber else -1
+                            if (selectedIndex?.value != monthDate?.date) monthDate?.date!! else -1
                         onClick(0)
                     })
                 .height(48.dp),
             shape = RoundedCornerShape(4.dp),
             //  elevation = CardDefaults.cardElevation(2.dp),
-            colors = cardColor(if (isCurrent) green else if (selectedIndex?.value == dateNumber) brand_color else light_background)
+            colors = cardColor(if (monthDate?.isCurrent == true) green else if (selectedIndex?.value == monthDate?.date) brand_color else light_background)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -61,17 +61,19 @@ fun DateItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = dateNumber.toString(),
+                    text = monthDate?.date.toString(),
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (isCurrent) light_background else if (selectedIndex?.value == dateNumber) light_background else Color.Black,
+                    color = if (monthDate?.isCurrent == true) light_background else if (selectedIndex?.value == monthDate?.date) light_background else Color.Black,
                 )
-                Box(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(8.dp)
-                        .background(circleColor)
+                if (monthDate?.isHasEvent == true) {
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(8.dp)
+                            .background(circleColor)
+                    )
+                }
 
-                )
             }
         }
 
@@ -90,7 +92,7 @@ fun cardColor(color: Color) =
 fun DateItemPreview() {
     MycalenderTheme {
         Surface(color = background) {
-            DateItem()
+            //DateItem()
 
         }
     }
