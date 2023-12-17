@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,9 +70,9 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
 
             ) {
-                items(items = it) { item ->
+                itemsIndexed(items = it, key = {index, item -> index }) { index,item ,->
                     if (item.date != -1) {
-                        DateItem(monthDate = item)
+                        DateItem(monthDate = item, selectedIndex = selectedIndex, index = index)
                     }
                 }
 

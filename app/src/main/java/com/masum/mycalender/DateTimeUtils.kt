@@ -13,6 +13,7 @@ object DateTimeUtils {
     const val MMM_YYYY_STRING = "MMM yyyy"
     const val MM_YYYY_NUMBER = "MM/yyyy"
     const val DD_MM_YYYY = "dd/MM/yyyy"
+    const val dd_MMM_yyyy = "dd MMM yyyy"
     const val dd = "dd"
 
     private var calendar: Calendar? = null

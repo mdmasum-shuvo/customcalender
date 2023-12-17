@@ -1,5 +1,7 @@
 package com.masum.mycalender.customer_calender.component
 
+import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,8 +40,10 @@ import com.masum.mycalender.ui.theme.light_background
 fun DateItem(
     monthDate: MonthDate?,
     selectedIndex: MutableState<Int>? = null,
+    index: Int = 0,
     onClick: (Int) -> Unit = { }
 ) {
+    Log.e("data",monthDate.toString())
     Box(modifier = Modifier.padding(vertical = 4.dp)) {
         Card(
             Modifier
@@ -51,9 +55,10 @@ fun DateItem(
                         onClick(0)
                     })
                 .height(48.dp),
-            shape = RoundedCornerShape(4.dp),
+            border = BorderStroke(1.dp,if (monthDate?.isCurrent == true) green else light_background),
+            shape = RoundedCornerShape(8.dp),
             //  elevation = CardDefaults.cardElevation(2.dp),
-            colors = cardColor(if (monthDate?.isCurrent == true) green else if (selectedIndex?.value == monthDate?.date) brand_color else light_background)
+            colors = cardColor(if (selectedIndex?.value == monthDate?.date) brand_color else light_background)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -63,7 +68,7 @@ fun DateItem(
                 Text(
                     text = monthDate?.date.toString(),
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (monthDate?.isCurrent == true) light_background else if (selectedIndex?.value == monthDate?.date) light_background else Color.Black,
+                    color =  if (selectedIndex?.value == monthDate?.date) light_background else Color.Black,
                 )
                 if (monthDate?.isHasEvent == true) {
                     Box(

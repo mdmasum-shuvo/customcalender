@@ -80,6 +80,8 @@ class CalenderViewModel : ViewModel() {
         val month = cal[Calendar.MONTH]
         val year = cal[Calendar.YEAR]
         getStartDayOfMonth(year, DateTimeUtils.actualMonth(month))
+        monthGenerator()
+
     }
 
     fun decreaseMonth(date: String) {
@@ -106,6 +108,8 @@ class CalenderViewModel : ViewModel() {
         val month = cal[Calendar.MONTH]
         val year = cal[Calendar.YEAR]
         getStartDayOfMonth(year, DateTimeUtils.actualMonth(month))
+        monthGenerator()
+
     }
 
 
@@ -148,30 +152,23 @@ class CalenderViewModel : ViewModel() {
         eventList.add("10/12/2023")
         eventList.add("11/12/2023")
         eventList.add("12/12/2023")
-        eventList.add("10/12/2023")
+        eventList.add("17/12/2023")
         eventList.add("30/12/2023")
         eventList.add("27/12/2023")
+        eventList.add("27/11/2023")
     }
 
-    fun isHasEvent(day: Int): Boolean {
+    fun isHasEvent(date: String): Boolean {
+        val changeDateFormat = DateTimeUtils.changeDateFormat(
+            DateTimeUtils.dd_MMM_yyyy,
+            DateTimeUtils.DD_MM_YYYY,
+            date
+        )
         for (item in eventList) {
-            val eventMonth =
-                DateTimeUtils.changeDateFormat(
-                    DateTimeUtils.DD_MM_YYYY,
-                    DateTimeUtils.MMM_YYYY_STRING,
-                    item
-                )
-
-            val eventDate =
-                DateTimeUtils.changeDateFormat(
-                    DateTimeUtils.DD_MM_YYYY,
-                    "dd",
-                    item
-                )
-            if (eventMonth == selectedMonth.value) {
-                if (day == eventDate?.toInt())
-                    return true
+            if (changeDateFormat == item) {
+                return true
             }
+
         }
         return false
     }
@@ -185,16 +182,27 @@ class CalenderViewModel : ViewModel() {
 
     private fun monthGenerator() {
         val list = ArrayList<MonthDate>()
-        val gridSize = startDayOfMonth.value?.let { dateList.value?.plus(it-1) }
+        val gridSize = startDayOfMonth.value?.let { dateList.value?.plus(it) }
         for (i in 0 until gridSize!!) {
             if (i < (startDayOfMonth.value!!)) {
                 list.add(MonthDate(-1))
             } else {
-                list.add(MonthDate(i - (startDayOfMonth.value!!-1)))
+                val date = i - (startDayOfMonth.value!! - 1)
+                val actualDate = "$date ${selectedMonth.value}"
+                val isHasEvent = isHasEvent(actualDate)
+                list.add(
+                    MonthDate(
+                        date = date,
+                        actualDate = actualDate,
+                        isCurrent = actualDate == DateTimeUtils.getCurrentDateTime(DateTimeUtils.dd_MMM_yyyy),
+                        isHasEvent = isHasEvent
+                    )
+                )
+
             }
         }
-        _calenderMonth.value=list
-        Log.e("","")
+        _calenderMonth.value = list
+        Log.e("", "")
 
     }
 }
