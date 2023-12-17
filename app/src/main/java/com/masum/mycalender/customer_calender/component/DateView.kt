@@ -15,10 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.masum.mycalender.customer_calender.MainCalenderScreen
 import com.masum.mycalender.ui.theme.MycalenderTheme
 import com.masum.mycalender.ui.theme.background
-import com.masum.mycalender.ui.theme.green
 
 
 @Composable
@@ -38,7 +36,6 @@ fun DateView(
         Text(
             text = selectedDate,
             style = MaterialTheme.typography.headlineLarge,
-            color = green
         )
         Icon(
             Icons.Default.KeyboardArrowRight,

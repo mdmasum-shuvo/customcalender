@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +29,10 @@ import com.masum.mycalender.ui.theme.background
 
 
 @Composable
-fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
+fun MainCalenderScreen(
+    viewModel: CalenderViewModel = CalenderViewModel(),
+    selectedDate: MutableState<String>? = null
+) {
 
     val selectedIndex = remember { mutableStateOf(viewModel.selectedExploreIndex.value!!) }
 
@@ -70,9 +74,11 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
 
             ) {
-                itemsIndexed(items = it, key = {index, item -> index }) { index,item ,->
+                itemsIndexed(items = it, key = { index, item -> index }) { index, item ->
                     if (item.date != -1) {
-                        DateItem(monthDate = item, selectedIndex = selectedIndex, index = index)
+                        DateItem(monthDate = item, selectedIndex = selectedIndex) { item ->
+                            selectedDate?.value = item.actualDate ?: ""
+                        }
                     }
                 }
 
