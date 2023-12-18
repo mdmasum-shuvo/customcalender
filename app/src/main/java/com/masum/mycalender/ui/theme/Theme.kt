@@ -14,6 +14,20 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.masum.custom_calender.ui.theme.Pink
+import com.masum.custom_calender.ui.theme.background
+import com.masum.custom_calender.ui.theme.blue
+import com.masum.custom_calender.ui.theme.blue_bg
+import com.masum.custom_calender.ui.theme.brand_color
+import com.masum.custom_calender.ui.theme.card_yellow
+import com.masum.custom_calender.ui.theme.dark_background
+import com.masum.custom_calender.ui.theme.gray_bg
+import com.masum.custom_calender.ui.theme.light_background
+import com.masum.custom_calender.ui.theme.light_blue
+import com.masum.custom_calender.ui.theme.light_green
+import com.masum.custom_calender.ui.theme.off_white
+import com.masum.custom_calender.ui.theme.text_dark
+import com.masum.custom_calender.ui.theme.text_gray
 
 
 private val DarkColorScheme = darkColorScheme(

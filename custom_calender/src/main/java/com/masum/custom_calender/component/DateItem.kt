@@ -29,13 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.masum.custom_calender.data.MonthDate
-import com.masum.mycalender.ui.theme.MycalenderTheme
-import com.masum.mycalender.ui.theme.background
-import com.masum.mycalender.ui.theme.brand_color
-import com.masum.mycalender.ui.theme.greenColor
-import com.masum.mycalender.ui.theme.lightGreenColor
-import com.masum.mycalender.ui.theme.light_background
-import com.masum.mycalender.ui.theme.light_green
+import com.masum.custom_calender.ui.theme.MycalenderTheme
+import com.masum.custom_calender.ui.theme.background
+import com.masum.custom_calender.ui.theme.greenColor
+import com.masum.custom_calender.ui.theme.lightGreenColor
+import com.masum.custom_calender.ui.theme.light_background
 
 @Composable
 fun DateItem(

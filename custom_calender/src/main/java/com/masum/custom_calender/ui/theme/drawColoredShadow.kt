@@ -1,4 +1,4 @@
-package com.masum.mycalender.ui.theme
+
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.masum.mycalender.ui.theme.brand_color
+import com.masum.custom_calender.ui.theme.brand_color
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun Modifier.drawColoredShadow(

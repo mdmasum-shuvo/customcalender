@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import com.masum.custom_calender.component.DateItem
 import com.masum.custom_calender.component.DateView
 import com.masum.custom_calender.component.DayNameItem
-import com.masum.mycalender.ui.theme.MycalenderTheme
-import com.masum.mycalender.ui.theme.background
+import com.masum.custom_calender.ui.theme.MycalenderTheme
+import com.masum.custom_calender.ui.theme.background
 
 
 @Composable

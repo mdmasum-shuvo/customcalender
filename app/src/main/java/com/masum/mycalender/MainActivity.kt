@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.masum.custom_calender.main_file.CalenderViewModel
 import com.masum.custom_calender.main_file.MainCalenderScreen
 
-import com.masum.mycalender.ui.theme.MycalenderTheme
+import com.masum.custom_calender.ui.theme.MycalenderTheme
 
 class MainActivity : ComponentActivity() {
 

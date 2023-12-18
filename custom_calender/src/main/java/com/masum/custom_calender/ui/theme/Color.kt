@@ -1,4 +1,4 @@
-package com.masum.mycalender.ui.theme
+package com.masum.custom_calender.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
