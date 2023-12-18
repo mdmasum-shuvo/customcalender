@@ -4,7 +4,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    // call viewmodel first
         val viewModel: CalenderViewModel = ViewModelProvider(this)[CalenderViewModel::class.java]
+        //declare event if has
         val eventList = ArrayList<String>()
 
 
@@ -15,9 +18,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                //declare to get seelcted date
                     val selectedDate = remember {
                         mutableStateOf("")
                     }
+                    //add event
                     eventList.add("01/12/2023")
                     eventList.add("09/12/2023")
                     eventList.add("10/12/2023")
@@ -34,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         //do here
                         Log.e("selected date", "select date:" + selectedDate.value)
                     })
+                    // call main calender screen 
                     MainCalenderScreen(viewModel, selectedDate = selectedDate)
                 }
             }
