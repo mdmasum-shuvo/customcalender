@@ -1,4 +1,4 @@
-package com.masum.mycalender.customer_calender
+package com.masum.custom_calender.main_file
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,9 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.masum.mycalender.customer_calender.component.DateItem
-import com.masum.mycalender.customer_calender.component.DateView
-import com.masum.mycalender.customer_calender.component.DayNameItem
+import com.masum.custom_calender.component.DateItem
+import com.masum.custom_calender.component.DateView
+import com.masum.custom_calender.component.DayNameItem
 import com.masum.mycalender.ui.theme.MycalenderTheme
 import com.masum.mycalender.ui.theme.background
 
@@ -31,8 +31,8 @@ import com.masum.mycalender.ui.theme.background
 @Composable
 fun MainCalenderScreen(
     viewModel: CalenderViewModel = CalenderViewModel(),
-    selectedDate: MutableState<String>? = null
-) {
+    selectedDate: MutableState<String>,
+    ) {
 
     val selectedIndex = remember { mutableStateOf(viewModel.selectedExploreIndex.value!!) }
 
@@ -62,7 +62,6 @@ fun MainCalenderScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
-
         ) {
             items(viewModel.list, key = { item -> item.name }) {
                 DayNameItem(it.name)
@@ -72,12 +71,11 @@ fun MainCalenderScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(7),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
-
             ) {
                 itemsIndexed(items = it, key = { index, item -> index }) { index, item ->
                     if (item.date != -1) {
                         DateItem(monthDate = item, selectedIndex = selectedIndex) { item ->
-                            selectedDate?.value = item.actualDate ?: ""
+                            selectedDate.value = item.actualDate ?: ""
                         }
                     }
                 }
@@ -95,7 +93,7 @@ fun MainCalenderScreen(
 fun DayNameItemPreview() {
     MycalenderTheme {
         Surface(color = background) {
-            MainCalenderScreen()
+         //   MainCalenderScreen()
         }
     }
 }

@@ -1,13 +1,12 @@
-package com.masum.mycalender.customer_calender
+package com.masum.custom_calender.main_file
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.masum.mycalender.DateTimeUtils
-import com.masum.mycalender.customer_calender.data.DayName
-import com.masum.mycalender.customer_calender.data.MonthDate
-import com.masum.mycalender.sealed.StartDaySelector
+import com.masum.custom_calender.data.DayName
+import com.masum.custom_calender.data.MonthDate
+
 import java.text.SimpleDateFormat
 import java.time.YearMonth
 import java.util.Calendar
@@ -18,6 +17,8 @@ class CalenderViewModel : ViewModel() {
 
 
     val list = ArrayList<DayName>()
+
+
     private var _dateList = MutableLiveData<Int>()
     val dateList: LiveData<Int>
         get() = _dateList
@@ -42,9 +43,9 @@ class CalenderViewModel : ViewModel() {
 
     val eventList = ArrayList<String>()
 
+
     init {
         showDayName()
-        addEvent()
         _selectedMonth.value = DateTimeUtils.getCurrentDateTime(DateTimeUtils.MMM_YYYY_STRING)
         println(getCurrentDateTime())
         getStartDayOfMonth(
@@ -52,7 +53,7 @@ class CalenderViewModel : ViewModel() {
             DateTimeUtils.getCurrentDateTime("MM").toInt()
         )
 
-        monthGenerator()
+       // generateCalender()
     }
 
 
@@ -80,7 +81,7 @@ class CalenderViewModel : ViewModel() {
         val month = cal[Calendar.MONTH]
         val year = cal[Calendar.YEAR]
         getStartDayOfMonth(year, DateTimeUtils.actualMonth(month))
-        monthGenerator()
+        generateCalender()
 
     }
 
@@ -108,7 +109,7 @@ class CalenderViewModel : ViewModel() {
         val month = cal[Calendar.MONTH]
         val year = cal[Calendar.YEAR]
         getStartDayOfMonth(year, DateTimeUtils.actualMonth(month))
-        monthGenerator()
+        generateCalender()
 
     }
 
@@ -145,9 +146,9 @@ class CalenderViewModel : ViewModel() {
         list.add(DayName("SAT"))
     }
 
-    private fun addEvent() {
-        eventList.add("06/12/2023")
-        eventList.add("01/12/2023")
+     fun createEvent(list: List<String>) {
+        eventList.addAll(list)
+/*        eventList.add("01/12/2023")
         eventList.add("09/12/2023")
         eventList.add("10/12/2023")
         eventList.add("11/12/2023")
@@ -155,7 +156,7 @@ class CalenderViewModel : ViewModel() {
         eventList.add("17/12/2023")
         eventList.add("30/12/2023")
         eventList.add("27/12/2023")
-        eventList.add("27/11/2023")
+        eventList.add("27/11/2023")*/
     }
 
     fun isHasEvent(date: String): Boolean {
@@ -180,7 +181,7 @@ class CalenderViewModel : ViewModel() {
         return formatter.format(date)
     }
 
-    private fun monthGenerator() {
+     fun generateCalender() {
         val list = ArrayList<MonthDate>()
         val gridSize = startDayOfMonth.value?.let { dateList.value?.plus(it) }
         for (i in 0 until gridSize!!) {

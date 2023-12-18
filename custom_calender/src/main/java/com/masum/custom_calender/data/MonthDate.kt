@@ -1,4 +1,4 @@
-package com.masum.mycalender.customer_calender.data
+package com.masum.custom_calender.data
 
 data class MonthDate(
     val date: Int,

@@ -1,4 +1,4 @@
-package com.masum.mycalender.customer_calender.component
+package com.masum.custom_calender.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

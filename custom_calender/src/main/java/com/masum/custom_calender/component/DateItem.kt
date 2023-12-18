@@ -1,4 +1,4 @@
-package com.masum.mycalender.customer_calender.component
+package com.masum.custom_calender.component
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.masum.mycalender.customer_calender.data.MonthDate
+import com.masum.custom_calender.data.MonthDate
 import com.masum.mycalender.ui.theme.MycalenderTheme
 import com.masum.mycalender.ui.theme.background
 import com.masum.mycalender.ui.theme.brand_color
@@ -41,10 +41,13 @@ import com.masum.mycalender.ui.theme.light_green
 fun DateItem(
     monthDate: MonthDate?,
     selectedIndex: MutableState<Int>? = null,
-    onClick: (monthDate:MonthDate) -> Unit = { }
+    onClick: (monthDate: MonthDate) -> Unit = { }
 ) {
     Log.e("data", monthDate.toString())
-    Box(modifier = Modifier.padding(vertical = 4.dp)) {
+    Box(
+        modifier = Modifier
+            .padding(vertical = 4.dp)
+    ) {
         Card(
             Modifier
                 .fillMaxWidth()
@@ -63,17 +66,16 @@ fun DateItem(
             ),
             shape = RoundedCornerShape(8.dp),
             //  elevation = CardDefaults.cardElevation(2.dp),
-            colors = cardColor(if (selectedIndex?.value == monthDate?.date) brand_color else light_background)
         ) {
             Box(
                 modifier = Modifier.background(
                     brush = Brush.horizontalGradient(
-                        colors =if (selectedIndex?.value == monthDate?.date) listOf(
+                        colors = if (selectedIndex?.value == monthDate?.date) listOf(
                             lightGreenColor,
                             greenColor,
                             greenColor,
                             greenColor,
-                        )else listOf(
+                        ) else listOf(
                             light_background,
                             light_background
                         )
@@ -91,12 +93,12 @@ fun DateItem(
                         style = MaterialTheme.typography.titleMedium,
                         color = if (selectedIndex?.value == monthDate?.date) light_background else Color.Black,
                     )
-                    if (monthDate?.isHasEvent == true ) {
+                    if (monthDate?.isHasEvent == true) {
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .size(8.dp)
-                                .background(if (selectedIndex?.value == monthDate?.date)light_background  else greenColor)
+                                .background(if (selectedIndex?.value == monthDate?.date) light_background else greenColor)
                         )
                     }
 
