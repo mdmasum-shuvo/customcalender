@@ -14,7 +14,7 @@
 
 
         	dependencies {
-        	        implementation 'com.github.mdmasum-shuvo:customcalender:-SNAPSHOT' //latest version
+        	       implementation(project(":custom_calender"))
         	}
 
 
