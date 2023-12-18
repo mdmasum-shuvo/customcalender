@@ -1,4 +1,4 @@
-package com.masum.mycalender.customer_calender
+package com.masum.custom_calender.main_file
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,15 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.masum.mycalender.customer_calender.component.DateItem
-import com.masum.mycalender.customer_calender.component.DateView
-import com.masum.mycalender.customer_calender.component.DayNameItem
+import com.masum.custom_calender.component.DateItem
+import com.masum.custom_calender.component.DateView
+import com.masum.custom_calender.component.DayNameItem
 import com.masum.mycalender.ui.theme.MycalenderTheme
 import com.masum.mycalender.ui.theme.background
 
 
 @Composable
-fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
+fun MainCalenderScreen(
+    viewModel: CalenderViewModel = CalenderViewModel(),
+    selectedDate: MutableState<String>,
+    ) {
 
     val selectedIndex = remember { mutableStateOf(viewModel.selectedExploreIndex.value!!) }
 
@@ -57,29 +62,21 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
-
         ) {
-            items(viewModel.list) {
+            items(viewModel.list, key = { item -> item.name }) {
                 DayNameItem(it.name)
             }
         }
-        viewModel.dateList.observeAsState().value?.let {
+        viewModel.calenderMonth.observeAsState().value?.let {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(7),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
-
             ) {
-                items(count = it + viewModel.startDayOfMonth.value!!, key = {
-                    it
-                }) { count ->
-                    if (count >= viewModel.startDayOfMonth.value!!) {
-                        var countDate = count - viewModel.startDayOfMonth.value!!
-                        DateItem(
-                            isCurrent = if (viewModel.currentMonth == viewModel.selectedMonth.value) {
-                                (count - (viewModel.startDayOfMonth.value!! - 1)) == viewModel.currentDateNumber.toInt()
-                            } else false,
-                            ++countDate, selectedIndex = selectedIndex, {}
-                        )
+                itemsIndexed(items = it, key = { index, item -> index }) { index, item ->
+                    if (item.date != -1) {
+                        DateItem(monthDate = item, selectedIndex = selectedIndex) { item ->
+                            selectedDate.value = item.actualDate ?: ""
+                        }
                     }
                 }
 
@@ -96,7 +93,7 @@ fun MainCalenderScreen(viewModel: CalenderViewModel = CalenderViewModel()) {
 fun DayNameItemPreview() {
     MycalenderTheme {
         Surface(color = background) {
-            MainCalenderScreen()
+         //   MainCalenderScreen()
         }
     }
 }

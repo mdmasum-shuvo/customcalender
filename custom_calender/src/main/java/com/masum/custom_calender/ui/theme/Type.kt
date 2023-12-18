@@ -4,13 +4,14 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.masum.custom_calender.ui.theme.popins
 
 // Set of Material typography styles to start with
 val Typography = Typography(
 
 
     headlineLarge = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W600,
         fontSize = 22.sp,
         letterSpacing = 0.5.sp,
@@ -18,45 +19,45 @@ val Typography = Typography(
 
 
     headlineMedium = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W600,
         fontSize = 18.sp,
         letterSpacing = 0.5.sp
     ),
 
     headlineSmall = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W600,
         fontSize = 18.sp,
         letterSpacing = 0.5.sp
     ),
 
     titleLarge = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W600,
         fontSize = 16.sp,
         letterSpacing = 0.5.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W600,
         fontSize = 14.sp,
         letterSpacing = 0.5.sp
     ),
     bodyLarge = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W400,
         fontSize = 16.sp,
     ),
 
     bodyMedium = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         letterSpacing = 0.1.sp
     ),
     bodySmall = TextStyle(
-        fontFamily = fonts_noto,
+        fontFamily = popins,
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
     )
